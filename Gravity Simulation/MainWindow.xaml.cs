@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Timers;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 
 namespace Gravity_Simulation
 {
@@ -100,6 +101,13 @@ namespace Gravity_Simulation
                 MarkerDots.Add(CreateMarkerDot((float)dot.Margin.Left, (float)dot.Margin.Top));
             }
             timer.Stop();
+            if (calculator.Dead)
+            {
+                Startbtn.Click += StartAnimation;
+                Startbtn.Click -= StopAnimation;
+                Startbtn.Content = "Start";
+                running = false;
+            }
         }
 
         //-------------------------------------------------------------------------------
@@ -184,6 +192,8 @@ namespace Gravity_Simulation
             //reverse the height because in wpf the top is the 0 and bottom is the maxvalue
             this.height = Math.Abs((this.height / yrate) - (float)Drawfield.ActualHeight);
             this.xcord = (xcord / xrate);
+            //So the previous markers are gone
+            RemoveMarkerDots();
         }
 
         //--------------------------------------------------------------------------------
@@ -257,6 +267,7 @@ namespace Gravity_Simulation
             {
                 return;
             }
+
             running = true;
 
             //Change the button into a stop button
@@ -264,14 +275,11 @@ namespace Gravity_Simulation
             Startbtn.Click += StopAnimation;
             Startbtn.Content = "Stop";
 
-            //So the previous markers are gone
-            RemoveMarkerDots();
             GetParametersFromTextBoxes();
             Update(xcord, height);
             //initialize a new calculator class since we don't check for if the data changed
             calculator = new GravityCalculator((float)Convert.ToDouble(Heightbox.Text), (float)Convert.ToDouble(xcordtbox.Text), speed, angle);
             await Animate();
-            running = false;
         }
 
         //---------------------------------------------------------------------------------------------
@@ -279,14 +287,10 @@ namespace Gravity_Simulation
         private void StopAnimation(object sender, RoutedEventArgs e)
         {
             calculator.MakeItDie();
-            Startbtn.Click += StartAnimation;
-            Startbtn.Click -= StopAnimation;
-            Startbtn.Content = "Start";
             Pausebtn.Content = "Pause";
             Pausebtn.Click -= Pausebtn_Click;
             Pausebtn.Click -= Resumebtn_Click;
             Pausebtn.Click += Pausebtn_Click;
-            calculator.MakeItDie();
             paused = false;
             running = false;
         }
@@ -304,6 +308,8 @@ namespace Gravity_Simulation
             Update(xcord, height);
         }
 
+        //-----------------------------------------------------------------------------------
+        //update the realheight and the markerlabels
         private void maxheighttbox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             ChangeHeightMarkerLabels();
@@ -312,6 +318,8 @@ namespace Gravity_Simulation
             Update(xcord, height);
         }
 
+        //---------------------------------------------------------------------------------------------------
+        //Update realxcord and the markerlabels
         private void Maxxsizetbox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             ChangexcordMarkerLabels();
@@ -347,6 +355,18 @@ namespace Gravity_Simulation
             Pausebtn.Click -= Resumebtn_Click;
             running = true;
             await Animate();
+        }
+
+        //-----------------------------------------------------------------------------
+        //Only accept numbers and 1 comma
+        private void OnlyNumber_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+            if (e.Text == ",")
+            {
+                e.Handled = (sender as TextBox).Text.Contains(",");
+            }
         }
     }
 }

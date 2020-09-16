@@ -54,7 +54,7 @@ namespace Gravity_Simulation
             this.originalxcord = xcord;
         }
 
-        //private methods
+        //private methods****************************************************
 
         private float CalcPathWithoutAngle()
         {
@@ -71,6 +71,7 @@ namespace Gravity_Simulation
             return output;
         }
 
+        //**********************************************************************
         //public methods
         public float Calculatepath()
         {
@@ -88,6 +89,7 @@ namespace Gravity_Simulation
             }
         }
 
+        //-------------------------------------------------------------------------
         //Get the current cords
         public void CalcCords(float time)
         {
@@ -108,6 +110,7 @@ namespace Gravity_Simulation
             }
         }
 
+        //--------------------------------------------------------------------
         //Makes Dead value true that's it
         public void MakeItDie()
         {

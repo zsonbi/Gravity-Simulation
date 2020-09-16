@@ -6,6 +6,13 @@
         xmlns:local="clr-namespace:Gravity_Simulation"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="1200" ContentRendered="Window_ContentRendered">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <EventSetter Event="PreviewTextInput" Handler="OnlyNumber_PreviewTextInput"></EventSetter>
+            <Setter Property="Margin" Value="0,5,0,0"></Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid>
 
         <Grid.ColumnDefinitions>
@@ -67,7 +74,7 @@
             <TextBox Name="maxheighttbox"  Grid.Row="4" Grid.Column="1" Text="1000" LostKeyboardFocus="maxheighttbox_LostKeyboardFocus"></TextBox>
 
             <Label Content="maximum x size" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right"></Label>
-            <TextBox Name="Maxxsizetbox"  Grid.Row="5" Grid.Column="1" Text="1000" LostKeyboardFocus="Maxxsizetbox_LostKeyboardFocus"></TextBox>
+            <TextBox Name="Maxxsizetbox"  Grid.Row="5" Grid.Column="1" Text="1000" LostKeyboardFocus="Maxxsizetbox_LostKeyboardFocus" PreviewTextInput="OnlyNumber_PreviewTextInput"></TextBox>
         </Grid>
 
         <!--Buttons-->
