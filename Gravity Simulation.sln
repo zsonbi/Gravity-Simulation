@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gravity Simulation", "Gravity Simulation\Gravity Simulation.csproj", "{447CEA81-F673-4B5E-8A82-E472D390C7EB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{447CEA81-F673-4B5E-8A82-E472D390C7EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{447CEA81-F673-4B5E-8A82-E472D390C7EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{447CEA81-F673-4B5E-8A82-E472D390C7EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{447CEA81-F673-4B5E-8A82-E472D390C7EB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D5950D09-8EED-4A6C-8610-BB9CC5825584}
+	EndGlobalSection
+EndGlobal

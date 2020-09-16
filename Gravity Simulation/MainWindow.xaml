@@ -1,0 +1,188 @@
+﻿<Window x:Class="Gravity_Simulation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gravity_Simulation"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1200" ContentRendered="Window_ContentRendered">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30px" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*" />
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="25px" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--inputs-->
+        <Grid Grid.Row="1" Grid.Column="2" Name="inputgrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25px" />
+                <RowDefinition Height="25px" />
+                <RowDefinition Height="25px" />
+                <RowDefinition Height="40px" />
+                <RowDefinition Height="25px" />
+                <RowDefinition Height="25px" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!--Height-->
+
+            <Label Content="Height:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right"></Label>
+            <TextBox Name="Heightbox" Grid.Row="0" Grid.Column="1" Text="512"></TextBox>
+
+            <!--X cord-->
+
+            <Label Content="X cord:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right"></Label>
+            <TextBox Name="xcordtbox"  Grid.Row="1" Grid.Column="1"></TextBox>
+
+            <Label Content="starting speed:" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right"></Label>
+            <TextBox Name="speedtbox"  Grid.Row="2" Grid.Column="1"></TextBox>
+
+            <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right">
+                <TextBlock Text="angle of  the speed:" TextWrapping="WrapWithOverflow" TextAlignment="Right">
+                </TextBlock>
+            </Label>
+            <TextBox Name="angletbox"  Grid.Row="3" Grid.Column="1"></TextBox>
+
+            <Label Content="maximum height" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right"></Label>
+            <TextBox Name="maxheighttbox"  Grid.Row="4" Grid.Column="1" Text="1000" LostKeyboardFocus="maxheighttbox_LostKeyboardFocus"></TextBox>
+
+            <Label Content="maximum x size" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right"></Label>
+            <TextBox Name="Maxxsizetbox"  Grid.Row="5" Grid.Column="1" Text="1000" LostKeyboardFocus="Maxxsizetbox_LostKeyboardFocus"></TextBox>
+        </Grid>
+
+        <!--Buttons-->
+        <Grid Grid.Row="3" Grid.Column="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition  Width="*" />
+                <ColumnDefinition  Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Button Content="Set the dot at the parameters" Grid.ColumnSpan="2" Grid.Row="0" Click="SetDot"></Button>
+            <Button Content="Additional Parameters" Grid.ColumnSpan="2"  Grid.Row="1"></Button>
+            <Button Content="Reset" Grid.ColumnSpan="2" Grid.Row="2"></Button>
+            <Button Grid.Column="0" Grid.Row="3" Name="Startbtn" Content="Start" Click="StartAnimation" />
+            <Button Grid.Column="1" Grid.Row="3" Name="Pausebtn" Content="Pause" Click="Pausebtn_Click" />
+        </Grid>
+
+        <!--Height marker line thingies-->
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Canvas.ZIndex="10" Name="heightmarkergrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Line X1="10" X2="2000" Stroke="Black" Grid.Row="0" Grid.ZIndex="11">
+            </Line>
+            <Label Grid.Row="0" Content="900" VerticalContentAlignment="Bottom" VerticalAlignment="Bottom" />
+
+            <Line X1="10" X2="2000" Stroke="Black" Grid.Row="1" Canvas.ZIndex="11">
+            </Line>
+            <Label Grid.Row="1" Content="800" VerticalContentAlignment="Bottom" VerticalAlignment="Bottom" />
+            <Line X1="10" X2="2000" Stroke="Black" Grid.Row="2" Canvas.ZIndex="11">
+            </Line>
+            <Label Grid.Row="2" Content="700" VerticalContentAlignment="Bottom" VerticalAlignment="Bottom" />
+            <Line X1="10" X2="2000" Stroke="Black" Grid.Row="3" Canvas.ZIndex="11">
+            </Line>
+            <Label Grid.Row="3" Content="600" VerticalContentAlignment="Bottom" VerticalAlignment="Bottom" />
+            <Line X1="10" X2="2000" Stroke="Black" Grid.Row="4" Canvas.ZIndex="11">
+            </Line>
+            <Label Grid.Row="4" Content="500" VerticalContentAlignment="Bottom" VerticalAlignment="Bottom" />
+            <Line X1="10" X2="2000" Stroke="Black" Grid.Row="5" Canvas.ZIndex="11">
+            </Line>
+            <Label Grid.Row="5" Content="400" VerticalContentAlignment="Bottom" VerticalAlignment="Bottom" />
+            <Line X1="10" X2="2000" Stroke="Black" Grid.Row="6" Canvas.ZIndex="11">
+            </Line>
+            <Label Grid.Row="6" Content="300" VerticalContentAlignment="Bottom" VerticalAlignment="Bottom" />
+            <Line X1="10" X2="2000" Stroke="Black" Grid.Row="7" Canvas.ZIndex="11">
+            </Line>
+            <Label Grid.Row="7" Content="200" VerticalContentAlignment="Bottom" VerticalAlignment="Bottom" />
+            <Line X1="10" X2="2000" Stroke="Black" Grid.Row="8" Canvas.ZIndex="11">
+            </Line>
+            <Label Grid.Row="8" Content="100" VerticalContentAlignment="Bottom" VerticalAlignment="Bottom" />
+            <Line X1="10" X2="2000" Stroke="Black" Grid.Row="9" Canvas.ZIndex="11">
+            </Line>
+            <Label Grid.Row="9" Content="0" VerticalContentAlignment="Bottom" VerticalAlignment="Bottom" />
+        </Grid>
+
+        <!--Helper Line at the bottom-->
+        <Line X1="10" X2="2000" Stroke="Black" Grid.Row="2" Canvas.ZIndex="11">
+        </Line>
+
+        <!--Xcord marker line thingies-->
+        <Grid Grid.Row="2" Grid.Column="1"  Canvas.ZIndex="10" Name="xcordmarkergrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Line Y1="-1000" Y2="10" Canvas.ZIndex="10" Grid.Column="0" Stroke="black"></Line>
+            <Label Content="100" Grid.Column="0" VerticalAlignment="Top" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" />
+
+            <Line Y1="-1000" Y2="10" Canvas.ZIndex="10" Grid.Column="1" Stroke="black"></Line>
+            <Label Content="200" Grid.Column="1" VerticalAlignment="Top" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" />
+            <Line Y1="-1000" Y2="10" Canvas.ZIndex="10" Grid.Column="2" Stroke="black"></Line>
+            <Label Content="300" Grid.Column="2" VerticalAlignment="Top" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" />
+            <Line Y1="-1000" Y2="10" Canvas.ZIndex="10" Grid.Column="3" Stroke="black"></Line>
+            <Label Content="400" Grid.Column="3" VerticalAlignment="Top" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" />
+            <Line Y1="-1000" Y2="10" Canvas.ZIndex="10" Grid.Column="4" Stroke="black"></Line>
+            <Label Content="500" Grid.Column="4" VerticalAlignment="Top" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" />
+            <Line Y1="-1000" Y2="10" Canvas.ZIndex="10" Grid.Column="5" Stroke="black"></Line>
+            <Label Content="600" Grid.Column="5" VerticalAlignment="Top" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" />
+            <Line Y1="-1000" Y2="10" Canvas.ZIndex="10" Grid.Column="6" Stroke="black"></Line>
+            <Label Content="700" Grid.Column="6" VerticalAlignment="Top" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" />
+            <Line Y1="-1000" Y2="10" Canvas.ZIndex="10" Grid.Column="7" Stroke="black"></Line>
+            <Label Content="800" Grid.Column="7" VerticalAlignment="Top" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" />
+            <Line Y1="-1000" Y2="10" Canvas.ZIndex="10" Grid.Column="8" Stroke="black"></Line>
+            <Label Content="900" Grid.Column="8" VerticalAlignment="Top" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" />
+            <Line Y1="-1000" Y2="10" Canvas.ZIndex="10" Grid.Column="9" Stroke="black"></Line>
+            <Label Content="1000" Grid.Column="9" VerticalAlignment="Top" HorizontalContentAlignment="Right" VerticalContentAlignment="Top" />
+            <!--Helper Line at the Bottom-->
+            <Line X1="0" X2="1000" Canvas.ZIndex="10" Grid.ColumnSpan="11" Stroke="black"></Line>
+        </Grid>
+
+        <!--DrawField-->
+        <Canvas MouseDown="DrawDot" Name="Drawfield"  Grid.Row="1" Grid.Column="1"  Background="AliceBlue">
+        </Canvas>
+    </Grid>
+</Window>
