@@ -19,30 +19,9 @@ namespace Gravity_Simulation
         public float xcord { get; private set; }
         public float angle { get; private set; }
         public bool Dead { get; private set; }
+        public float speed { get; private set; }
 
-        //Constructors
-        public GravityCalculator(float height, float xcord)
-        {
-            Dead = false;
-            this.height = height;
-            this.xcord = xcord;
-            this.angle = 90;
-            this.startspeed = 0;
-            this.originalheight = height;
-            this.originalxcord = xcord;
-        }
-
-        public GravityCalculator(float height, float xcord, float startspeed)
-        {
-            Dead = false;
-            this.height = height;
-            this.xcord = xcord;
-            this.angle = 90;
-            this.startspeed = startspeed;
-            this.originalheight = height;
-            this.originalxcord = xcord;
-        }
-
+        //Constructor
         public GravityCalculator(float height, float xcord, float startspeed, float angle)
         {
             Dead = false;
@@ -56,48 +35,19 @@ namespace Gravity_Simulation
 
         //private methods****************************************************
 
-        private float CalcPathWithoutAngle()
-        {
-            float maxheight = startspeed * startspeed / (2 * gravity);
-
-            return maxheight * 2;
-        }
-
-        private float Calcpath()
-        {
-            float output = 0;
-            float xspeed = startspeed * (float)(Math.Cosh(Math.PI / 180 * angle));
-            float yspeed = startspeed * (float)(Math.Sinh(Math.PI / 180 * angle));
-            return output;
-        }
-
         //**********************************************************************
         //public methods
-        public float Calculatepath()
-        {
-            if (startspeed == 0 || angle == 270)
-            {
-                return height;
-            }
-            else if (angle == 90)
-            {
-                return CalcPathWithoutAngle();
-            }
-            else
-            {
-                return Calculatepath();
-            }
-        }
-
-        //-------------------------------------------------------------------------
         //Get the current cords
-        public void CalcCords(float time)
+        public void Calculate(float time)
         {
             Dead = false;
             float xspeed = startspeed * (float)(Math.Cos(Math.PI / 180 * angle));
             float yspeed = startspeed * (float)(Math.Sin(Math.PI / 180 * angle));
             xcord = originalxcord + xspeed * time;
             height = originalheight + (yspeed * time - (gravity / 2) * time * time);
+            //Calculates the current speed
+            speed = (float)Math.Sqrt(Math.Pow(xspeed, 2) + Math.Pow((yspeed - gravity * time), 2));
+            //If we would go out of the map
             if (xcord < 0)
             {
                 xcord = 0;

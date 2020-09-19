@@ -191,5 +191,24 @@
         <!--DrawField-->
         <Canvas MouseDown="DrawDot" Name="Drawfield"  Grid.Row="1" Grid.Column="1"  Background="AliceBlue">
         </Canvas>
+
+        <Grid Grid.Row="3" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="3">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Label Content="Speed" FontSize="14" />
+                    <TextBlock Text="0" Name="currspeedtbox" Width="60px" FontSize="18" VerticalAlignment="Center"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" />
+                <StackPanel></StackPanel>
+                <StackPanel></StackPanel>
+                <StackPanel></StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

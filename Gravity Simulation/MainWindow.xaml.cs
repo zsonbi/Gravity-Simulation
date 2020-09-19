@@ -68,10 +68,17 @@ namespace Gravity_Simulation
             heightLabels.Reverse();
         }
 
-        //Update the pos of the dot according to the parameters
+        //Update the pos of the dot according to the parameters and updates the speed also
         private void Update(float xcord, float ycord)
         {
             dot.Margin = new Thickness(xcord - 5, ycord - 5, 0, 0);
+            currspeedtbox.Text = calculator.speed.ToString();
+        }
+
+        //Sets dot at the current cords
+        private void setDot()
+        {
+            dot.Margin = new Thickness(xcord - 5, height - 5, 0, 0);
         }
 
         //--------------------------------------------------------------------------
@@ -84,8 +91,8 @@ namespace Gravity_Simulation
             paused = false;
             while (!calculator.Dead && !paused)
             {
-                //Calculate the current cords of the dot
-                calculator.CalcCords((float)timer.Elapsed.TotalSeconds);
+                //Calculate the current cords of the dot and it's speed
+                calculator.Calculate((float)timer.Elapsed.TotalSeconds);
 
                 //If it won't go through the top
                 if (calculator.height / yrate - (float)Drawfield.ActualHeight < 0)
@@ -151,8 +158,8 @@ namespace Gravity_Simulation
         //Update the heightbox and xtbox Text when we set the dot cords by clicking
         private void UpdateDataFields()
         {
-            xcordtbox.Text = (xcord).ToString();
-            Heightbox.Text = ((Drawfield.ActualHeight - (height / yrate)) * yrate).ToString();
+            xcordtbox.Text = (xcord * xrate).ToString();
+            Heightbox.Text = ((Drawfield.ActualHeight - (height)) * yrate).ToString();
         }
 
         //--------------------------------------------------------------------------------
@@ -227,22 +234,22 @@ namespace Gravity_Simulation
         //Move the dot to the clicked Pos
         private void DrawDot(object sender, MouseButtonEventArgs e)
         {
+            //While the animation is running the user can't place the dot
             if (running)
             {
                 return;
             }
             //Get the cords of the mouse
             Point mousecords = e.GetPosition(Drawfield);
+            //So the user can't place the dot outside of the canvas by pressing on the edges of the dot
             if (mousecords.Y > Drawfield.ActualHeight || mousecords.X > Drawfield.ActualWidth)
             {
                 return;
             }
-
             //update the fields
-            height = (float)(mousecords.Y) * yrate;
-            xcord = (float)(mousecords.X) * xrate;
-
-            Update(xcord / xrate, height / yrate);
+            height = (float)(mousecords.Y);
+            xcord = (float)(mousecords.X);
+            setDot();
 
             //Update the fields
             UpdateDataFields();
@@ -253,7 +260,7 @@ namespace Gravity_Simulation
         private void SetDot(object sender, RoutedEventArgs e)
         {
             GetParametersFromTextBoxes();
-            Update(xcord, height);
+            setDot();
 
             calculator = new GravityCalculator(height, xcord, speed, angle);
         }
@@ -276,8 +283,7 @@ namespace Gravity_Simulation
             Startbtn.Content = "Stop";
 
             GetParametersFromTextBoxes();
-            Update(xcord, height);
-            //initialize a new calculator class since we don't check for if the data changed
+            //initialize a new calculator class
             calculator = new GravityCalculator((float)Convert.ToDouble(Heightbox.Text), (float)Convert.ToDouble(xcordtbox.Text), speed, angle);
             await Animate();
         }
@@ -292,6 +298,9 @@ namespace Gravity_Simulation
             Pausebtn.Click -= Resumebtn_Click;
             Pausebtn.Click += Pausebtn_Click;
             paused = false;
+            Startbtn.Click += StartAnimation;
+            Startbtn.Click -= StopAnimation;
+            Startbtn.Content = "Start";
             running = false;
         }
 
@@ -305,7 +314,7 @@ namespace Gravity_Simulation
             GetParametersFromTextBoxes();
             //Create the dot
             CreateDot();
-            Update(xcord, height);
+            setDot();
         }
 
         //-----------------------------------------------------------------------------------
@@ -315,7 +324,7 @@ namespace Gravity_Simulation
             ChangeHeightMarkerLabels();
             yrate = (float)(realheight / Drawfield.ActualHeight);
             this.height = Math.Abs(((float)Convert.ToDouble(Heightbox.Text) / yrate) - (float)Drawfield.ActualHeight);
-            Update(xcord, height);
+            setDot();
         }
 
         //---------------------------------------------------------------------------------------------------
@@ -325,7 +334,7 @@ namespace Gravity_Simulation
             ChangexcordMarkerLabels();
             xrate = (float)(realxcord / Drawfield.ActualWidth);
             xcord = (float)Convert.ToDouble(xcordtbox.Text) / xrate;
-            Update(xcord, height);
+            setDot();
         }
 
         //--------------------------------------------------------------------------------
